@@ -1,4 +1,4 @@
-""" Этот скрипт служит для добавление нового юзера в систему распознаваний!"""
+""" Этот скрипт служит для добавление нового человек в систему распознаваний!"""
 import glob
 import os
 import cv2
@@ -12,7 +12,7 @@ import face_recognition
 name = input('Enter name: ')
 surname = input('Enter surname: ')
 
-user_folder_prefix = name.capitalize() + surname.capitalize()
+user_folder_prefix = name.capitalize() +'_'+ surname.capitalize()
 
 
 def is_letter_input(letter):
@@ -27,7 +27,9 @@ if __name__ == '__main__':
 
     counter = 0
 
-    cap = cv2.VideoCapture(config.VIDEO_SOURCE)
+
+    cap = cv2.VideoCapture(0)
+    # cap = cv2.VideoCapture(config.VIDEO_SOURCE)
 
     if not os.path.exists(config.TRAINING_DIR + user_folder_prefix):
         os.makedirs(config.TRAINING_DIR + user_folder_prefix)
