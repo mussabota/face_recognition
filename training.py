@@ -4,7 +4,7 @@ from __future__ import print_function
 import sys
 
 from classifier import training
-import config
+# import config
 
 datadir = './faces_dir'
 modeldir = './model/20170511-185253.pb'
