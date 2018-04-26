@@ -17,7 +17,10 @@ MODEL_DIR = './model/20170511-185253.pb'
 CLASSIFIER_FILENAME = './class/classifier.pkl'
 NPY = './npy'
 TRAINING_DIR = 'training_dir/'
+<<<<<<< HEAD
 CHECK_FACE_FOLDER = 'check_face/'
+=======
+>>>>>>> origin/master
 FACES_DIR = '/faces_dir'
 #"./training_dir"
 
