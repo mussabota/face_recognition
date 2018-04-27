@@ -1,32 +1,21 @@
-<<<<<<< HEAD
-""" Этот скрипт служит для добавление нового user-a в систему распознаваний!"""
-import glob
-import os
-import cv2
-import numpy as np
-=======
+
 """ Этот скрипт служит для добавление нового человек в систему распознаваний!"""
 import glob
 import os
 import cv2
-# import numpy
->>>>>>> origin/master
+import numpy as np
 import config
 # import face
 import select
 import sys
 import face_recognition
-<<<<<<< HEAD
 import official_photo
 
 name = official_photo.name
-=======
+surname = official_photo.surname
 
-name = input('Enter name: ')
->>>>>>> origin/master
-surname = input('Enter surname: ')
-
-user_folder_prefix = name.capitalize() +'_'+ surname.capitalize()
+#user_folder_prefix = name.capitalize() +'_'+ surname.capitalize()
+user_folder_prefix = official_photo.username
 
 
 def is_letter_input(letter):
@@ -41,19 +30,12 @@ if __name__ == '__main__':
 
     counter = 0
 
-
-<<<<<<< HEAD
     #cap = cv2.VideoCapture(1)
     cap = cv2.VideoCapture(config.VIDEO_SOURCE)
-=======
-    cap = cv2.VideoCapture(0)
-    # cap = cv2.VideoCapture(config.VIDEO_SOURCE)
->>>>>>> origin/master
 
     if not os.path.exists(config.TRAINING_DIR + user_folder_prefix):
         os.makedirs(config.TRAINING_DIR + user_folder_prefix)
 
-<<<<<<< HEAD
     person_name = os.listdir(config.CHECK_FACE_FOLDER)
     known_encodings = []
     names = []
@@ -65,8 +47,6 @@ if __name__ == '__main__':
         names.append(os.path.splitext(p_name))
 
 
-=======
->>>>>>> origin/master
     files = sorted(glob.glob(os.path.join(config.TRAINING_DIR + user_folder_prefix, name + '[0-9][0-9].jpg')))
 
     if len(files) > 0:
@@ -86,17 +66,11 @@ if __name__ == '__main__':
         cropped_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
         amount_of_faces = face_recognition.face_locations(cropped_frame)
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/master
         if len(amount_of_faces) > 1:
             cv2.putText(frame, 'please ensure there is only one person in the picture!', (0, 20),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
             print('please ensure there is only one person in the picture!')
         elif len(amount_of_faces) == 1:
-<<<<<<< HEAD
             face_encoding = face_recognition.face_encodings(cropped_frame, amount_of_faces)[0]
 
             distance = face_recognition.face_distance(known_encodings, face_encoding)
@@ -117,7 +91,6 @@ if __name__ == '__main__':
             else:
                 cv2.putText(frame, 'Sorry! Could not find any match!', (0, 20),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
-=======
             cv2.putText(frame, 'please, press key "c" to take photo!', (0, 20),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
 
@@ -130,7 +103,6 @@ if __name__ == '__main__':
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
                 counter += 1
 
->>>>>>> origin/master
         else:
             cv2.putText(frame, 'no face detected!', (0, 20),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)

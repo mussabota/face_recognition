@@ -4,13 +4,16 @@ import face_recognition
 import config
 
 
+name = input("Enter name: ").capitalize()
+surname = input("Enter surname: ").capitalize()
+user_ID = input("Enter ID: ")
 
-name = input("Enter name: ")
+username = name + '_' + surname
 
-if name == None or len(name) < 1:
+if username == None or len(username) < 1:
     raise ("what's your name? ")
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(config.VIDEO_SOURCE)
 if not os.path.exists(config.CHECK_FACE_FOLDER):
     os.makedirs(config.CHECK_FACE_FOLDER)
 
@@ -41,7 +44,8 @@ while True:
         break
     elif k & 0xFF == ord('c'):
         print(name + " has been added successfully!")
-        cv2.imwrite(config.CHECK_FACE_FOLDER + name + '.jpg', frame)
+        cv2.putText(frame, name+ ' - has been added successfully!', (0, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 1)
+        cv2.imwrite(config.CHECK_FACE_FOLDER + username + '.jpg', frame)
         break
 
 cap.release()

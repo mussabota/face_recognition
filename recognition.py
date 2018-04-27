@@ -12,10 +12,8 @@ import time
 import pickle
 import face_recognition
 import face
-<<<<<<< HEAD
 import config
-=======
->>>>>>> origin/master
+
 
 input_video = 0
 modeldir = './model/20170511-185253.pb'
@@ -23,7 +21,6 @@ classifier_filename = './class/classifier.pkl'
 npy = './npy'
 train_img = "./training_dir"
 
-<<<<<<< HEAD
 person_name = os.listdir(config.CHECK_FACE_FOLDER)
 known_encodings = []
 names = []
@@ -35,8 +32,6 @@ for p_name in person_name:
     names.append(os.path.splitext(p_name))
 
 
-=======
->>>>>>> origin/master
 with tf.Graph().as_default():
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.6)
     sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
@@ -66,11 +61,8 @@ with tf.Graph().as_default():
         with open(classifier_filename_exp, 'rb') as infile:
             (model, class_names) = pickle.load(infile)
 
-<<<<<<< HEAD
         video_capture = cv2.VideoCapture(config.VIDEO_SOURCE)
-=======
-        video_capture = cv2.VideoCapture(input_video)
->>>>>>> origin/master
+
         c = 0
 
         print('Start Recognition')
@@ -106,7 +98,6 @@ with tf.Graph().as_default():
                 cv2.putText(frame, 'please, press key "r" to recognize person!', (0, 20),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
 
-<<<<<<< HEAD
                 face_encoding = face_recognition.face_encodings(cropped_frame, amount_of_faces)[0]
 
                 distance = face_recognition.face_distance(known_encodings, face_encoding)
@@ -193,7 +184,6 @@ with tf.Graph().as_default():
                 else:
                     cv2.putText(frame, 'Sorry! Could not find any match!', (0, 300),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
-=======
                 if (c % timeF == 0) and cv2.waitKey(1) & 0xFF == ord('r'):
                     find_results = []
 
@@ -268,7 +258,6 @@ with tf.Graph().as_default():
                                                     1, (0, 0, 255), thickness=1, lineType=2)
                     else:
                         print('Alignment Failure')
->>>>>>> origin/master
 
             else:
                 cv2.putText(frame, 'no face detected!', (0, 20),
@@ -283,8 +272,5 @@ with tf.Graph().as_default():
                 break
 
         video_capture.release()
-<<<<<<< HEAD
         cv2.destroyAllWindows()
-=======
         cv2.destroyAllWindows()
->>>>>>> origin/master
