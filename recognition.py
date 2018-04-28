@@ -13,9 +13,9 @@ import pickle
 import face_recognition
 import face
 import config
+from datetime import datetime
 
 
-input_video = 0
 modeldir = './model/20170511-185253.pb'
 classifier_filename = './class/classifier.pkl'
 npy = './npy'
@@ -159,8 +159,13 @@ with tf.Graph().as_default():
 
                                 #  print(best_class_probabilities)
                                 if best_class_probabilities > 0.7:
+
                                     cv2.rectangle(frame, (bb[i][0], bb[i][1]), (bb[i][2], bb[i][3]), (0, 255, 0),
                                                   2)  # boxing face
+
+                                    if not config.door_status():
+                                        config.set_status(True)
+
 
                                     # plot result idx under box
                                     text_x = bb[i][0]
@@ -168,13 +173,14 @@ with tf.Graph().as_default():
                                     # print('Result Indices: ', best_class_indices[0])
                                     name, surname = str(HumanNames[best_class_indices[0]]).split('_')
                                     # print(name, surname)
+
+
                                     for H_i in HumanNames:
                                         if HumanNames[best_class_indices[0]] == H_i:
                                             result_names = name + ' ' + surname  # HumanNames[best_class_indices[0]]
-                                            if name == 'Nursultan':
-                                                result_names = result_names + '- Ауыл спортын дамытушы'
+                                            fixed_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ' '
 
-                                            print(result_names)
+                                            print(result_names, 'last entered at ', fixed_time)
                                             cv2.putText(frame, result_names, (text_x, text_y),
                                                         cv2.FONT_HERSHEY_COMPLEX_SMALL,
                                                         1, (0, 0, 255), thickness=1, lineType=2)

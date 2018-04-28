@@ -5,7 +5,7 @@ import numpy as np
 
 """Все необходимые конфигурации устанвливается в этом скрипте!"""
 
-VIDEO_SOURCE = 1
+VIDEO_SOURCE = 0
 #VIDEO_SOURCE = "rtsp://192.168.0.101:8080"
 
 HAAR_FACES = 'haarcascades/haarcascade_frontalface_default.xml'
@@ -20,4 +20,18 @@ TRAINING_DIR = 'training_dir/'
 CHECK_FACE_FOLDER = 'check_face/'
 FACES_DIR = '/faces_dir'
 #"./training_dir"
+
+esik_ashyk = False
+#is_locked = True
+
+def door_status():
+    if esik_ashyk:
+        return True
+    else:
+        return False
+
+def set_status(status):
+    if not status:
+        esik_ashyk = True
+
 
