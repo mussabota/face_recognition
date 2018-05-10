@@ -5,7 +5,7 @@ import numpy as np
 
 """Все необходимые конфигурации устанвливается в этом скрипте!"""
 
-VIDEO_SOURCE = 0
+VIDEO_SOURCE = 1
 #VIDEO_SOURCE = "rtsp://192.168.0.101:8080"
 
 HAAR_FACES = 'haarcascades/haarcascade_frontalface_default.xml'

@@ -158,7 +158,7 @@ with tf.Graph().as_default():
                                 # print(curTime)
 
                                 #  print(best_class_probabilities)
-                                if best_class_probabilities > 0.7:
+                                if best_class_probabilities > 0.6:
 
                                     cv2.rectangle(frame, (bb[i][0], bb[i][1]), (bb[i][2], bb[i][3]), (0, 255, 0),
                                                   2)  # boxing face

@@ -11,6 +11,7 @@ import sys
 import face_recognition
 import official_photo
 
+
 name = official_photo.name
 surname = official_photo.surname
 
@@ -19,7 +20,6 @@ user_folder_prefix = official_photo.username
 
 
 def is_letter_input(letter):
-    """Для проверки введенного через консоль символа"""
     if select.select([sys.stdin, ], [], [], 0.0)[0]:
         input_char = sys.stdin.read(1)
         return input_char.lower() == letter.lower()
