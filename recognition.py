@@ -32,6 +32,7 @@ for p_name in person_name:
     names.append(os.path.splitext(p_name))
 
 
+
 with tf.Graph().as_default():
     gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.6)
     sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options, log_device_placement=False))
@@ -40,7 +41,7 @@ with tf.Graph().as_default():
 
         minsize = 20  # minimum size of face
         threshold = [0.6, 0.7, 0.7]  # three steps's threshold
-        factor = 0.709  # scale factor
+        factor = 0.7  # scale factor
         margin = 44
         frame_interval = 3
         batch_size = 1000
@@ -50,7 +51,7 @@ with tf.Graph().as_default():
         HumanNames = os.listdir(train_img)
         HumanNames.sort()
 
-        print('Loading Modal')
+        print('Loading Model...')
         facenet.load_model(modeldir)
         images_placeholder = tf.get_default_graph().get_tensor_by_name("input:0")
         embeddings = tf.get_default_graph().get_tensor_by_name("embeddings:0")
@@ -67,11 +68,12 @@ with tf.Graph().as_default():
         c = 0
 
         print('Start Recognition')
+
         prevTime = 0
         while True:
             ret, frame = video_capture.read()
 
-            frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)  # resize frame (optional)
+            frame = cv2.resize(frame, (0, 0), fx=0.50, fy=0.50)  # resize frame (optional)
 
             curTime = time.time() + 1  # calc fps
             timeF = frame_interval
@@ -100,6 +102,7 @@ with tf.Graph().as_default():
                 cv2.putText(frame, 'please, press key "r" to recognize person!', (0, 20),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
 
+
                 face_encoding = face_recognition.face_encodings(cropped_frame, amount_of_faces)[0]
 
                 distance = face_recognition.face_distance(known_encodings, face_encoding)
@@ -107,7 +110,9 @@ with tf.Graph().as_default():
 
                 if distance[idx] < 0.5:
 
-                    if (c % timeF == 0) and cv2.waitKey(1) & 0xFF == ord('r'):
+                    #if (c % timeF == 0) and cv2.waitKey(1) & 0xFF == ord('r'):
+                    if c % timeF == 0:
+
                         find_results = []
 
                         if frame.ndim == 2:
@@ -150,13 +155,14 @@ with tf.Graph().as_default():
                                 feed_dict = {images_placeholder: scaled_reshape[i], phase_train_placeholder: False}
                                 emb_array[0, :] = sess.run(embeddings, feed_dict=feed_dict)
                                 predictions = model.predict_proba(emb_array)
-                                print(predictions)
+                               # print(predictions)
                                 best_class_indices = np.argmax(predictions, axis=1)
                                 best_class_probabilities = predictions[
                                     np.arange(len(best_class_indices)), best_class_indices]
                                 # print("predictions")
-                                # print(best_class_indices, ' with accuracy ', best_class_probabilities)
-                                print("Prediction value is {0} %".format(int(best_class_probabilities * 100)))
+                                print(best_class_indices, ' with accuracy ', best_class_probabilities)
+                                #print("Prediction value is {0} %".format(int(best_class_probabilities * 100)))
+                                print("Prediction value is {0} %".format(best_class_probabilities ))
                                 # print(curTime)
 
                                 #  print(best_class_probabilities)
@@ -173,8 +179,10 @@ with tf.Graph().as_default():
                                     text_x = bb[i][0]
                                     text_y = bb[i][3] + 20
                                     # print('Result Indices: ', best_class_indices[0])
+                                    #tolyq = str(HumanNames[best_class_indices[0]])
                                     name, surname = str(HumanNames[best_class_indices[0]]).split('_')
-                                    # print(name, surname)
+                                    #print(name, surname)
+
 
 
                                     for H_i in HumanNames:
