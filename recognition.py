@@ -61,7 +61,8 @@ with tf.Graph().as_default():
         with open(classifier_filename_exp, 'rb') as infile:
             (model, class_names) = pickle.load(infile)
 
-        video_capture = cv2.VideoCapture(config.VIDEO_SOURCE)
+        # video_capture = cv2.VideoCapture(config.VIDEO_SOURCE)
+        video_capture = config.capturing()
 
         c = 0
 
@@ -78,16 +79,17 @@ with tf.Graph().as_default():
             if not ret:
                 print('Camera error!')
 
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-            faces = face.detect_faces(frame)
+            faces = face.detect_faces(gray)
 
             for (x, y, w, h) in faces:
-                cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 2)
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 255), 2)
+
+
             cropped_frame = cv2.resize(frame, (0, 0), fx=0.50, fy=0.50)
             amount_of_faces = face_recognition.face_locations(cropped_frame)
 
-
-            #print(amount_of_faces)
 
             if len(amount_of_faces) > 1:
                 cv2.putText(frame, 'please ensure there is only one person in the picture!', (0, 20),
@@ -158,7 +160,7 @@ with tf.Graph().as_default():
                                 # print(curTime)
 
                                 #  print(best_class_probabilities)
-                                if best_class_probabilities > 0.6:
+                                if best_class_probabilities > 0.7:
 
                                     cv2.rectangle(frame, (bb[i][0], bb[i][1]), (bb[i][2], bb[i][3]), (0, 255, 0),
                                                   2)  # boxing face

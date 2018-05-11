@@ -5,7 +5,7 @@ import os
 import cv2
 import numpy as np
 import config
-# import face
+import face
 import select
 import sys
 import face_recognition
@@ -30,8 +30,10 @@ if __name__ == '__main__':
 
     counter = 0
 
-    #cap = cv2.VideoCapture(1)
-    cap = cv2.VideoCapture(config.VIDEO_SOURCE)
+    cap = config.capturing()
+   # cap = cv2.VideoCapture(config.VIDEO_SOURCE)
+    #cap.set(3, 300)
+    #cap.set(4, 400)
 
     if not os.path.exists(config.TRAINING_DIR + user_folder_prefix):
         os.makedirs(config.TRAINING_DIR + user_folder_prefix)
@@ -63,8 +65,16 @@ if __name__ == '__main__':
         if not ret:
             print('Camera error!')
 
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        faces = face.detect_faces(gray)
+
+        for (x, y, w, h) in faces:
+            cv2.rectangle(frame, (x,y), (x+w, y+h), (255, 0, 255), 2)
+
         cropped_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
         amount_of_faces = face_recognition.face_locations(cropped_frame)
+
 
         if len(amount_of_faces) > 1:
             cv2.putText(frame, 'please ensure there is only one person in the picture!', (0, 20),
@@ -88,9 +98,9 @@ if __name__ == '__main__':
                     cv2.putText(frame, 'Found face and wrote training image {0}'.format(file_name), (60, 20),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
                     counter += 1
-            else:
-                cv2.putText(frame, 'Sorry! Could not find any match!', (0, 20),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
+            #else:
+             #   cv2.putText(frame, 'Sorry! Could not find any match!', (0, 20),
+              #              cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
             cv2.putText(frame, 'please, press key "c" to take photo!', (0, 20),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
 

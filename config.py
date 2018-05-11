@@ -35,3 +35,10 @@ def set_status(status):
         esik_ashyk = True
 
 
+def capturing():
+    cap = cv2.VideoCapture(VIDEO_SOURCE)
+    cap.set(3, 400)
+    cap.set(4, 600)
+
+    return cap
+

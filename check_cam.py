@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 import config
 
-cap = cv2.VideoCapture(config.VIDEO_SOURCE)
+cap = config.capturing()
 
 while True:
     ret, frame = cap.read()

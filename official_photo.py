@@ -2,6 +2,7 @@ import cv2
 import os
 import face_recognition
 import config
+import face
 
 name = input("Enter name: ").capitalize()
 surname = input("Enter surname: ").capitalize()
@@ -12,7 +13,9 @@ username = name + '_' + surname
 if username is None or len(username) < 1:
     raise Exception("what's your name? ")
 
-cap = cv2.VideoCapture(config.VIDEO_SOURCE)
+# cap = cv2.VideoCapture(config.VIDEO_SOURCE)
+cap = config.capturing()
+
 if not os.path.exists(config.CHECK_FACE_FOLDER):
     os.makedirs(config.CHECK_FACE_FOLDER)
 
@@ -22,6 +25,13 @@ while True:
 
     if not ret:
         print("Camera error!")
+
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    faces = face.detect_faces(gray)
+
+    for (x, y, w, h) in faces:
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 255), 2)
 
     small_face = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
     face_location = face_recognition.face_locations(small_face)
