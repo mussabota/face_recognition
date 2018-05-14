@@ -29,7 +29,7 @@ class Preprocesses:
         minsize = 20  # minimum size of face
         threshold = [0.6, 0.7, 0.7]  # three steps's threshold
         factor = 0.709  # scale factor
-        # margin = 44
+        margin = 44
         image_size = 182
 
         # Add a random key to the filename to allow alignment using multiple processes

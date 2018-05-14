@@ -32,8 +32,7 @@ if __name__ == '__main__':
 
     cap = config.capturing()
    # cap = cv2.VideoCapture(config.VIDEO_SOURCE)
-    #cap.set(3, 300)
-    #cap.set(4, 400)
+
 
     if not os.path.exists(config.TRAINING_DIR + user_folder_prefix):
         os.makedirs(config.TRAINING_DIR + user_folder_prefix)
@@ -101,17 +100,17 @@ if __name__ == '__main__':
             #else:
              #   cv2.putText(frame, 'Sorry! Could not find any match!', (0, 20),
               #              cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
-            cv2.putText(frame, 'please, press key "c" to take photo!', (0, 20),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
+        #    cv2.putText(frame, 'please, press key "c" to take photo!', (0, 20),
+         #               cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
 
-            if cv2.waitKey(1) & 0xFF == ord('c') or is_letter_input('c'):
-                file_name = os.path.join(config.TRAINING_DIR + user_folder_prefix, name + '%03d.jpg' % counter)
-                cv2.imwrite(file_name, frame)
+          #  if cv2.waitKey(1) & 0xFF == ord('c') or is_letter_input('c'):
+           #     file_name = os.path.join(config.TRAINING_DIR + user_folder_prefix, name + '%03d.jpg' % counter)
+            #    cv2.imwrite(file_name, frame)
 
-                print('Found face and wrote training image', file_name)
-                cv2.putText(frame, 'Found face and wrote training image {0}'.format(file_name), (60, 20),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
-                counter += 1
+             #   print('Found face and wrote training image', file_name)
+              #  cv2.putText(frame, 'Found face and wrote training image {0}'.format(file_name), (60, 20),
+               #             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 1)
+                #counter += 1
 
         else:
             cv2.putText(frame, 'no face detected!', (0, 20),
