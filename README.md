@@ -1,5 +1,4 @@
-# final_project
 # This is a final year project for university
-Team:
+##Team:
 - Abdraimov Talgat
 - Mussa Akbota
